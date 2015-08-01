@@ -1,11 +1,13 @@
 # <src>                                      <mnt_point>  	<type>  <mnt_flags and options>                     <fs_mgr_flags>
 
-/dev/block/mmcblk0p21		/boot		emmc		defaults		defaults
-/dev/block/mmcblk0p28		/recovery  	emmc		defaults		defaults
-/dev/block/mmcblk0p27		/cache      ext4		defaults		defaults
-/dev/block/mmcblk0p25		/system     ext4		defaults		defaults
-/dev/block/mmcblk0p29		/data		ext4		defaults	 	defaults
-/dev/block/mmcblk0p15       /misc           emmc    defaults        defaults
+/dev/block/bootdevice/by-name/boot         /boot           emmc    defaults                                             defaults
+/dev/block/bootdevice/by-name/recovery     /recovery       emmc    defaults                                             defaults
+/dev/block/bootdevice/by-name/persist        /persist     ext4    nosuid,nodev,barrier=1                              wait
+/dev/block/bootdevice/by-name/misc         /misc           emmc    defaults                                             defaults
+/dev/block/bootdevice/by-name/system         /system      ext4    ro,barrier=1,discard                                wait
+/dev/block/bootdevice/by-name/userdata       /data        ext4    nosuid,nodev,barrier=1,noauto_da_alloc,discard      wait,check,encryptable=footer
+/dev/block/bootdevice/by-name/cache          /cache       ext4    nosuid,nodev,barrier=1                              wait
+/dev/block/bootdevice/by-name/modem          /firmware    vfat    ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337  wait
 
 /dev/null					/sdcard		datamedia		defaults		defaults
 /dev/block/mmcblk1p1		/external_sd	vfat		defaults		defaults

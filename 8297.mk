@@ -29,11 +29,18 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/coolpad/8297/etc/audio_policy.conf:system/etc/audio_policy.conf \
     device/coolpad/8297/etc/mixer_paths_mtp.xml:system/etc/mixer_paths_mtp.xml \
-    device/coolpad/8297/etc/mixer_paths_qrd_skuh.xml:system/etc/mixer_paths_qrd_skuh.xml \
-    device/coolpad/8297/etc/mixer_paths_qrd_skui.xml:system/etc/mixer_paths_qrd_skui.xml \
-    device/coolpad/8297/etc/mixer_paths_qrd_skuhf.xml:system/etc/mixer_paths_qrd_skuhf.xml \
     device/coolpad/8297/etc/mixer_paths.xml:system/etc/mixer_paths.xml
 
+# Media
+PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+
+# Camera
+PRODUCT_PROPERTY_OVERRIDES += \
+    camera2.portability.force_api=1
 # DPM
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/etc/dpm/fdMgr/fd.conf:system/etc/dpm/fdMgr/fd.conf
@@ -41,16 +48,6 @@ PRODUCT_COPY_FILES += \
 # gps/location secuity configuration file
 PRODUCT_COPY_FILES += \
     device/coolpad/8297/sec_config:system/etc/sec_config
-
-# Audio calibration
-PRODUCT_COPY_FILES += \
-    device/coolpad/8297/audio/Bluetooth_cal.acdb:system/etc/Bluetooth_cal.acdb \
-    device/coolpad/8297/audio/General_cal.acdb:system/etc/General_cal.acdb \
-    device/coolpad/8297/audio/Global_cal.acdb:system/etc/Global_cal.acdb \
-    device/coolpad/8297/audio/Handset_cal.acdb:system/etc/Handset_cal.acdb \
-    device/coolpad/8297/audio/Hdmi_cal.acdb:system/etc/Hdmi_cal.acdb \
-    device/coolpad/8297/audio/Headset_cal.acdb:system/etc/Headset_cal.acdb \
-    device/coolpad/8297/audio/Speaker_cal.acdb:system/etc/Speaker_cal.acdb
 
 # Listen configuration file
 PRODUCT_COPY_FILES += \
@@ -66,15 +63,12 @@ PRODUCT_COPY_FILES += \
     device/coolpad/8297/etc/whitelist_appops.xml:system/etc/whitelist_appops.xml
 
 PRODUCT_COPY_FILES += \
-    device/coolpad/8297/wifi/p2p_supplicant.conf:system/etc/wifi/p2p_supplicant.conf \
     device/coolpad/8297/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+    device/coolpad/8297/wifi/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     device/coolpad/8297/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-    device/coolpad/8297/wifi/WCNSS_qcom_wlan_nv.bin:system/etc/wifi/WCNSS_qcom_wlan_nv.bin \
     device/coolpad/8297/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     device/coolpad/8297/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-    device/coolpad/8297/wifi/wlan/prima/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
-    device/coolpad/8297/wifi/wlan/prima/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
-    device/coolpad/8297/wifi/wlan/prima/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
+    device/coolpad/8297/wifi/WCNSS_qcom_wlan_nv.bin:system/etc/wifi/WCNSS_qcom_wlan_nv.bin
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.apm_sim_not_pwdn=1
@@ -88,6 +82,7 @@ PRODUCT_COPY_FILES += \
 # Offmode charge
 PRODUCT_COPY_FILES += \
     device/coolpad/8297/ramdisk/charger:root/charger \
+    $(LOCAL_PATH)/ramdisk/sbin/poweroffcharge:root/sbin/poweroffcharge \
     device/coolpad/8297/ramdisk/res/images/charger/battery_0.png:root/res/images/charger/battery_0.png \
     device/coolpad/8297/ramdisk/res/images/charger/battery_1.png:root/res/images/charger/battery_1.png \
     device/coolpad/8297/ramdisk/res/images/charger/battery_2.png:root/res/images/charger/battery_2.png \
@@ -139,24 +134,22 @@ TARGET_SCREEN_WIDTH := 720
 
 # ANT+ stack
 PRODUCT_PACKAGES += \
-    libasan_preload \
-    com.dsi.ant.antradio_library \
     AntHalService \
-    libantradio \
-    applypatch_static \
-    check_prereq \
-    loki_tool \
-    updater \
-    asanwrapper \
-    cjpeg \
-    djpeg \
-    gdbjithelper \
-    MiSettings \
-    antradio_app
+    com.dsi.ant.antradio_library \
+    antradio_app \
+    libantradio
+
+# Bson
+PRODUCT_PACKAGES += \
+    libbson
 
 PRODUCT_PACKAGES += \
 	libemoji \
 	libion
+    
+# STk
+PRODUCT_PACKAGES += \
+    Stk
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -195,34 +188,9 @@ PRODUCT_PACKAGES += \
     resize2fs \
     setup_fs
 
-# Bson
-PRODUCT_PACKAGES += \
-    libbson
-
-# Lib_xml2
-PRODUCT_PACKAGES += \
-    libxml2
-
-# Postprocessing
-PRODUCT_PACKAGES += \
-    libtinyxml
-
 # Flatland
 PRODUCT_PACKAGES += \
     Camera2
-
-# fmradio support
-PRODUCT_PACKAGES += \
-    qcom.fmradio \
-    libqcomfm_jni \
-    FM2 \
-    FMRecord
-
-PRODUCT_BOOT_JARS + = qcom.fmradio
-
-#fstab.qcom
-PRODUCT_PACKAGES += \
-    fstab.qcom
 
 PRODUCT_PACKAGES += \
     libqcompostprocbundle \
@@ -279,22 +247,10 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     power.msm8916
 
-# GPS
 PRODUCT_PACKAGES += \
-    gps.msm8916 \
-    libgps.utils \
-    libloc_eng \
-    libloc_api_v02 \
-    libloc_adapter
+    Torch
 
-# Recovery
-PRODUCT_PACKAGES += \
-    minivold
-
-# SoftAP
-PRODUCT_PACKAGES += \
-    libqsap_sdk
-
+# etc
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/hcidump.sh:system/etc/hcidump.sh \
     $(LOCAL_PATH)/etc/hsic.control.bt.sh:system/etc/hsic.control.bt.sh \
@@ -303,7 +259,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/etc/flp.conf:system/etc/flp.conf \
     $(LOCAL_PATH)/etc/clatd.conf:system/etc/clatd.conf \
-    $(LOCAL_PATH)/etc/fctd.cfg:system/etc/fctd.cfg \
     $(LOCAL_PATH)/etc/lowi.conf:system/etc/lowi.conf \
     $(LOCAL_PATH)/etc/xtwifi.conf:system/etc/xtwifi.conf \
     $(LOCAL_PATH)/etc/init.qcom.rootagent.sh:system/etc/init.qcom.rootagent.sh \
@@ -363,12 +318,6 @@ PRODUCT_PACKAGES += \
     ueventd.qcom.rc \
     ueventd.rc
 
-#spec service
-PRODUCT_PACKAGES += \
-    init.qti.carrier.rc
-
-PRODUCT_PACKAGES += \
-    wcnss_service
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
@@ -382,12 +331,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
-# Vold
-PRODUCT_PACKAGES += \
-    vold.fstab
-
 # Wifi
 PRODUCT_PACKAGES += \
+    libcurl \
+    libqsap_sdk \
+    libQWiFiSoftApCfg \
+    libxml2 \
     libwcnss_service \
     libwpa_client \
     hostapd \
@@ -428,5 +377,6 @@ $(call inherit-product, build/target/product/full.mk)
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-2048-dalvik-heap.mk)
 
+#$(call inherit-product, device/coolpad/8297/vendor/copyfiles.mk)
 # call the proprietary setup
 $(call inherit-product, vendor/coolpad/8297/8297-vendor.mk)

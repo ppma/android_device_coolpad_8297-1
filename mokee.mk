@@ -27,3 +27,6 @@ PRODUCT_PACKAGES += \
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := 8297
 PRODUCT_NAME := mk_8297
+
+PRODUCT_DEFAULT_LANGUAGE := zh
+PRODUCT_DEFAULT_REGION := CN

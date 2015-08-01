@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-# Inherit some common Mokee stuff.
+# Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Inherit device configuration
@@ -27,3 +27,6 @@ PRODUCT_PACKAGES += \
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := 8297
 PRODUCT_NAME := cm_8297
+
+PRODUCT_DEFAULT_LANGUAGE := zh
+PRODUCT_DEFAULT_REGION := CN
